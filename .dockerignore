@@ -1,0 +1,6 @@
+# ssl certs
+**/*.cert
+**/*.key
+
+# logs
+**/*.log
