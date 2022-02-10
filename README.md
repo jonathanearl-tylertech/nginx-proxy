@@ -1,1 +1,1 @@
-# selfhost-nginx-proxy
+# nginx-proxy
