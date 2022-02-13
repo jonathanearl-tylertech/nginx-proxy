@@ -1,5 +1,4 @@
-FROM nginx:stable
-WORKDIR /nginx-proxy
-COPY ./nginx-proxy/nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx-proxy/sites-enabled/ /nginx-proxy/sites-enabled
+FROM nginx:1.19.6-alpine
+RUN mkdir /etc/nginx/templates
+COPY ./templates/ /etc/nginx/templates/
 EXPOSE 80 443

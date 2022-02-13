@@ -1,14 +1,12 @@
 # required to fix dns resoution
 server {
-    access_log              /nginx-proxy/sites-enabled/mochibean.com/access.log;
-    error_log               /nginx-proxy/sites-enabled/mochibean.com/error.log;
-
+    resolver                127.0.0.11 ipv6=off valid=10s;
     listen                  443 ssl;
-    server_name             mochibean.com;
+    server_name             ${MOCHIBEAN_HOSTNAME};
 
     # using cloud front ssl certs
-    ssl_certificate         /nginx-proxy/sites-enabled/mochibean.com/ssl.cert;
-    ssl_certificate_key     /nginx-proxy/sites-enabled/mochibean.com/ssl.key;
+    ssl_certificate         /ssl/${MOCHIBEAN_HOSTNAME}.cert;
+    ssl_certificate_key     /ssl/${MOCHIBEAN_HOSTNAME}.key;
     ssl_protocols           TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers             HIGH:!aNULL:!MD5;
 
@@ -20,17 +18,15 @@ server {
         proxy_set_header    X-Forwarded-Proto   $scheme;
         proxy_set_header    X-Real-IP           $remote_addr;
         proxy_set_header    Host                $host;
-        set                 $target http://mb_wp;
+        set                 $target ${MOCHIBEAN_TARGET};
         proxy_pass          $target;  
     }
 }
 
 server {
-    access_log              /nginx-proxy/sites-enabled/mochibean.com/access.log;
-    error_log               /nginx-proxy/sites-enabled/mochibean.com/error.log;
-
+    resolver                127.0.0.11 ipv6=off valid=10s;
     listen 80;
-    server_name mochibean.com;
+    server_name             ${NGINX_SERVER_NAME};
 
     # redirect to https
     location / {
