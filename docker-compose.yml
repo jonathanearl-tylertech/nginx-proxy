@@ -6,9 +6,12 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      - MOCHIBEAN_HOSTNAME=mochibean.com
+      - MOCHIBEAN_TARGET=http://wordpress:80
     volumes:
-      - ./nginx-proxy/sites-enabled/:/nginx-proxy/sites-enabled/
-      - ./nginx-proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl/:/ssl/
 networks:
   default:
-    name: ingress
+    external: true
+    name: mochibeancom_default
