@@ -26,7 +26,7 @@ server {
 server {
     resolver                127.0.0.11 ipv6=off valid=10s;
     listen 80;
-    server_name             ${NGINX_SERVER_NAME};
+    server_name             ${MOCHIBEAN_HOSTNAME};
 
     # redirect to https
     location / {
