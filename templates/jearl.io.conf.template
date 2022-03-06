@@ -1,0 +1,37 @@
+# required to fix dns resoution
+server {
+    resolver                127.0.0.11 ipv6=off valid=10s;
+    listen                  443 ssl;
+    server_name             ${JEARL_HOSTNAME};
+
+    # using cloud front ssl certs
+    ssl_certificate         /ssl/${JEARL_HOSTNAME}.cert;
+    ssl_certificate_key     /ssl/${JEARL_HOSTNAME}.key;
+    ssl_protocols           TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers             HIGH:!aNULL:!MD5;
+
+    location / {
+        # required to fix dns resoution
+        proxy_set_header    X-Forwarded-Host    $host;
+        proxy_set_header    X-Forwarded-Server  $host;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    Host                $host;
+        set                 $target ${JEARL_TARGET};
+        proxy_pass          $target;  
+    }
+}
+
+server {
+    resolver                127.0.0.11 ipv6=off valid=10s;
+    listen 80;
+    server_name             ${JEARL_HOSTNAME};
+
+    # redirect to https
+    location / {
+        # required to fix dns resoution
+        set                 $target https://$host$request_uri;
+        return              301 $target;
+    }
+}

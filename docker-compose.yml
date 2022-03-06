@@ -9,6 +9,8 @@ services:
     environment:
       - MOCHIBEAN_HOSTNAME=mochibean.com
       - MOCHIBEAN_TARGET=http://wordpress:80
+      - JEARL_HOSTNAME=jearl.io
+      - JEARL_TARGET=http://jearl.io:80
     volumes:
       - ./ssl/:/ssl/
 networks:

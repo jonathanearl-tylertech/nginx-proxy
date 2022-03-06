@@ -1,7 +1,7 @@
 version: "3"
 services:
   nginx:
-    build: whattheearl/nginx-proxy:latest
+    image: whattheearl/nginx-proxy:latest
     restart: unless-stopped
     ports:
       - 80:80
@@ -9,6 +9,10 @@ services:
     environment:
       - MOCHIBEAN_HOSTNAME=mochibean.com
       - MOCHIBEAN_TARGET=http://wordpress:80
+      - JEARL_HOSTNAME=jearl.io
+      - JEARL_TARGET=http://jearl.io:80
+    volumes:
+      - /nginx-proxy/ssl:/ssl
 networks:
   default:
     external: true
