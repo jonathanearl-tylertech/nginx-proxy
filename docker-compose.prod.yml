@@ -1,0 +1,15 @@
+version: "3"
+services:
+  nginx:
+    build: whattheearl/nginx-proxy:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - MOCHIBEAN_HOSTNAME=mochibean.com
+      - MOCHIBEAN_TARGET=http://wordpress:80
+networks:
+  default:
+    external: true
+    name: mochibeancom_default
